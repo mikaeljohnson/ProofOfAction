@@ -1,5 +1,5 @@
-const Decentragram = artifacts.require("Decentragram");
+const ProofOfAction = artifacts.require("ProofOfAction");
 
 module.exports = function(deployer) {
-  deployer.deploy(Decentragram);
+  deployer.deploy(ProofOfAction);
 };

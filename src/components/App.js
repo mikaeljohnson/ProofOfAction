@@ -1,8 +1,11 @@
-import Decentragram from '../abis/Decentragram.json'
+import ProofOfAction from '../abis/ProofOfAction.json'
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Identicon from 'identicon.js';
 import Navbar from './Navbar'
 import Main from './Main'
+import Post from './Post'
+import Profile from './Profile'
 import Web3 from 'web3';
 import './App.css';
 
@@ -37,15 +40,18 @@ class App extends Component {
     this.setState({ account: accounts[0] })
     // Network ID
     const networkId = await web3.eth.net.getId()
-    const networkData = Decentragram.networks[networkId]
+    const networkData = ProofOfAction.networks[networkId]
     if(networkData) {
-      const decentragram = new web3.eth.Contract(Decentragram.abi, networkData.address)
-      this.setState({ decentragram })
-      const imagesCount = await decentragram.methods.imageCount().call()
+      const proofofaction = new web3.eth.Contract(ProofOfAction.abi, networkData.address)
+      this.setState({ proofofaction })
+      const imagesCount = await proofofaction.methods.imageCount().call()
       this.setState({ imagesCount })
+      // Load profile hash
+      const profilePicture = await proofofaction.methods.grabProfilePicture(accounts[0]).call()
+      this.setState({profilePicture})
       // Load images
       for (var i = 1; i <= imagesCount; i++) {
-        const image = await decentragram.methods.images(i).call()
+        const image = await proofofaction.methods.images(i).call()
         this.setState({
           images: [...this.state.images, image]
         })
@@ -56,7 +62,7 @@ class App extends Component {
       })
       this.setState({ loading: false})
     } else {
-      window.alert('Decentragram contract not deployed to detected network.')
+      window.alert('ProofOfAction contract not deployed to detected network.')
     }
   }
 
@@ -85,7 +91,25 @@ class App extends Component {
       }
 
       this.setState({ loading: true })
-      this.state.decentragram.methods.uploadImage(result[0].hash, description).send({ from: this.state.account }).on('transactionHash', (hash) => {
+      this.state.proofofaction.methods.uploadImage(result[0].hash, description).send({ from: this.state.account }).on('transactionHash', (hash) => {
+        this.setState({ loading: false })
+      })
+    })
+  }
+
+  updateProfile = description => {
+    console.log("Submitting file to ipfs...")
+
+    //adding file to the IPFS
+    ipfs.add(this.state.buffer, (error, result) => {
+      console.log('Ipfs result', result)
+      if(error) {
+        console.error(error)
+        return
+      }
+
+      this.setState({ loading: true })
+      this.state.proofofaction.methods.updateProfile(result[0].hash, description).send({ from: this.state.account }).on('transactionHash', (hash) => {
         this.setState({ loading: false })
       })
     })
@@ -93,38 +117,90 @@ class App extends Component {
 
   tipImageOwner(id, tipAmount) {
     this.setState({ loading: true })
-    this.state.decentragram.methods.tipImageOwner(id).send({ from: this.state.account, value: tipAmount }).on('transactionHash', (hash) => {
+    this.state.proofofaction.methods.tipImageOwner(id).send({ from: this.state.account, value: tipAmount }).on('transactionHash', (hash) => {
       this.setState({ loading: false })
     })
+  }
+  async getProfilePicture(user) {
+    const profilePicture = await this.state.proofofaction.methods.grabProfilePicture(user).call()
+    console.log(profilePicture)
+    this.setState({tempValue: profilePicture})
   }
 
   constructor(props) {
     super(props)
     this.state = {
       account: '',
-      decentragram: null,
+      tempValue: '',
+      proofofaction: null,
       images: [],
-      loading: true
+      loading: true,
+      profilePicture: '',
+      headerLinks: [
+        { title: 'Main', path: '/'},
+        { title: 'About Me', path: '/about'},
+        { title: 'Portfolio', path: '/portfolio'},
+        { title: 'Contact Me', path: '/contact'}
+      ],
+      main: {
+        title: 'Proof of Action',
+        subTitle: 'A fully decentralized alternative social media application',
+        text: 'Check out our most popular posts below or submit your own!'
+      },
+      post: {
+        title: 'New Post',
+        subTitle: '',
+        text: 'Upload any picture format with a brief description to have it uploaded to IPFS and shared to the world'
+      },
+      profile: {
+        title: 'New Post',
+        subTitle: '',
+        text: 'Upload any picture format with a brief description to have it uploaded to IPFS and shared to the world'
+      }
     }
 
+    this.updateProfile = this.updateProfile.bind(this)
     this.uploadImage = this.uploadImage.bind(this)
     this.tipImageOwner = this.tipImageOwner.bind(this)
     this.captureFile = this.captureFile.bind(this)
+    this.getProfilePicture = this.getProfilePicture.bind(this)
   }
 
   render() {
     return (
-      <div>
-        <Navbar account={this.state.account} />
+<div>        
+        <Navbar account={this.state.account} profilePicture={this.state.profilePicture}/>
         { this.state.loading
           ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
-          : <Main
+          : <Router>
+            <Route path="/" exact render={() => <Main
+              getProfilePicture={this.getProfilePicture}
+              tempValue={this.tempValue}
               images={this.state.images}
+              tipImageOwner={this.tipImageOwner}
+              title={this.state.main.title} 
+              subTitle={this.state.main.subTitle} 
+              text={this.state.main.text}
+            />}/>
+            <Route path="/post" exact render={() => <Post
               captureFile={this.captureFile}
               uploadImage={this.uploadImage}
-              tipImageOwner={this.tipImageOwner}
-            />
+              title={this.state.post.title} 
+              subTitle={this.state.post.subTitle} 
+              text={this.state.post.text}
+            />}/>
+            <Route path="/profile" exact render={() => <Profile
+              account ={this.state.account}
+              images={this.state.images}
+              captureFile={this.captureFile}
+              updateProfile={this.updateProfile}
+              title={this.state.profile.title} 
+              subTitle={this.state.profile.subTitle} 
+              text={this.state.profile.text}
+            />}/>
+            </Router>
         }
+        
       </div>
     );
   }
