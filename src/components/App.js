@@ -8,6 +8,7 @@ import Post from './Post'
 import Profile from './Profile'
 import Web3 from 'web3';
 import './App.css';
+import IpfsRouter from 'ipfs-react-router'
 
 //Declare IPFS
 const ipfsClient = require('ipfs-http-client')
@@ -49,6 +50,10 @@ class App extends Component {
       // Load profile hash
       const profilePicture = await proofofaction.methods.grabProfilePicture(accounts[0]).call()
       this.setState({profilePicture})
+      // Load profile bio
+      const profileBio = await proofofaction.methods.grabProfileBio(accounts[0]).call()
+      console.log(profileBio)
+      this.setState({profileBio})
       // Load images
       for (var i = 1; i <= imagesCount; i++) {
         const image = await proofofaction.methods.images(i).call()
@@ -136,6 +141,7 @@ class App extends Component {
       images: [],
       loading: true,
       profilePicture: '',
+      profileBio: '',
       headerLinks: [
         { title: 'Main', path: '/'},
         { title: 'About Me', path: '/about'},
@@ -153,7 +159,7 @@ class App extends Component {
         text: 'Upload any picture format with a brief description to have it uploaded to IPFS and shared to the world'
       },
       profile: {
-        title: 'New Post',
+        title: 'Your Profile',
         subTitle: '',
         text: 'Upload any picture format with a brief description to have it uploaded to IPFS and shared to the world'
       }
@@ -172,7 +178,7 @@ class App extends Component {
         <Navbar account={this.state.account} profilePicture={this.state.profilePicture}/>
         { this.state.loading
           ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
-          : <Router>
+          : <IpfsRouter>
             <Route path="/" exact render={() => <Main
               getProfilePicture={this.getProfilePicture}
               tempValue={this.tempValue}
@@ -196,9 +202,9 @@ class App extends Component {
               updateProfile={this.updateProfile}
               title={this.state.profile.title} 
               subTitle={this.state.profile.subTitle} 
-              text={this.state.profile.text}
+              text={this.state.profileBio}
             />}/>
-            </Router>
+            </IpfsRouter>
         }
         
       </div>

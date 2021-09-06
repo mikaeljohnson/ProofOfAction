@@ -32,5 +32,11 @@ module.exports = {
         runs: 200
       }
     }
+  },
+  plugins: [
+    'truffle-plugin-verify'
+  ],
+  api_keys: {
+    etherscan: 'VDIE5HJUC3B2SPHNVX2Z9ZIUN8KP96UYI2'
   }
 }
