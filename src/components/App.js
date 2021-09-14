@@ -177,9 +177,8 @@ class App extends Component {
     return (
 <div>        
         <Navbar account={this.state.account} profilePicture={this.state.profilePicture}/>
-        { this.state.loading
-          ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
-          : <IpfsRouter>
+        
+          <IpfsRouter>
             <Switch>
             <Route path="/test">
               <Test/>
@@ -211,7 +210,7 @@ class App extends Component {
             />}/>
             </Switch>
             </IpfsRouter>
-        }
+        
         
       </div>
     );
