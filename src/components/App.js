@@ -5,6 +5,7 @@ import Identicon from 'identicon.js';
 import Navbar from './Navbar'
 import Main from './Main'
 import Post from './Post'
+import Test from './Test'
 import Profile from './Profile'
 import Web3 from 'web3';
 import './App.css';
@@ -180,6 +181,9 @@ class App extends Component {
           ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
           : <IpfsRouter>
             <Switch>
+            <Route path="/test">
+              <Test/>
+              </Route>
             <Route path="/" exact render={() => <Main
               getProfilePicture={this.getProfilePicture}
               tempValue={this.tempValue}
