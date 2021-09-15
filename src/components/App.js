@@ -181,9 +181,6 @@ class App extends Component {
           ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
           : <Router>
             <Switch>
-            <Route path="/test">
-              <Test/>
-              </Route>
             <Route path="/" exact render={() => <Main
               getProfilePicture={this.getProfilePicture}
               tempValue={this.tempValue}
