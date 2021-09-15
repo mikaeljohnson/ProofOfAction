@@ -1,15 +1,12 @@
 import ProofOfAction from '../abis/ProofOfAction.json'
 import React, { Component } from 'react';
-import { HashRouter as Router, Route, Switch, Link } from 'react-router-dom';
-import Identicon from 'identicon.js';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './Navbar'
 import Main from './Main'
 import Post from './Post'
-import Test from './Test'
 import Profile from './Profile'
 import Web3 from 'web3';
 import './App.css';
-import IpfsRouter from 'ipfs-react-router'
 
 //Declare IPFS
 const ipfsClient = require('ipfs-http-client')
