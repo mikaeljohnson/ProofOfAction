@@ -1,6 +1,6 @@
 import ProofOfAction from '../abis/ProofOfAction.json'
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import Identicon from 'identicon.js';
 import Navbar from './Navbar'
 import Main from './Main'
@@ -177,8 +177,9 @@ class App extends Component {
     return (
 <div>        
         <Navbar account={this.state.account} profilePicture={this.state.profilePicture}/>
-        
-          <IpfsRouter>
+        { this.state.loading
+          ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
+          : <Router>
             <Switch>
             <Route path="/test">
               <Test/>
@@ -209,8 +210,8 @@ class App extends Component {
               text={this.state.profileBio}
             />}/>
             </Switch>
-            </IpfsRouter>
-        
+            </Router>
+        }
         
       </div>
     );
