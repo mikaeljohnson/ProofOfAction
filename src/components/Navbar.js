@@ -18,8 +18,8 @@ class Navbar extends Component {
         </a>
       
           <a href="/"> Home </a>
-          <a href="/post"> Post </a>
-          <a href="/profile"> Profile </a>
+          <a href="#post"> Post </a>
+          <a href="#profile"> Profile </a>
 
        
 
