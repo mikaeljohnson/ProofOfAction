@@ -1,14 +1,12 @@
 import ProofOfAction from '../abis/ProofOfAction.json'
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
-import Identicon from 'identicon.js';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './Navbar'
 import Main from './Main'
 import Post from './Post'
 import Profile from './Profile'
 import Web3 from 'web3';
 import './App.css';
-import IpfsRouter from 'ipfs-react-router'
 
 //Declare IPFS
 const ipfsClient = require('ipfs-http-client')
@@ -178,7 +176,7 @@ class App extends Component {
         <Navbar account={this.state.account} profilePicture={this.state.profilePicture}/>
         { this.state.loading
           ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
-          : <IpfsRouter>
+          : <Router>
             <Switch>
             <Route path="/" exact render={() => <Main
               getProfilePicture={this.getProfilePicture}
@@ -206,7 +204,7 @@ class App extends Component {
               text={this.state.profileBio}
             />}/>
             </Switch>
-            </IpfsRouter>
+            </Router>
         }
         
       </div>
