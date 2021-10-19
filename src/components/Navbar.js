@@ -14,7 +14,7 @@ class Navbar extends Component {
           rel="noopener noreferrer"
         >
           <img src={POApng} width="60" height="60" className="d-inline-block align-top-left" alt="" />
-          Proof of Action
+          OpenBoard
         </a>
       
           <a href="/"> Home </a>

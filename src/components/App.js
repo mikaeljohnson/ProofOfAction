@@ -149,14 +149,14 @@ class App extends Component {
         { title: 'Contact Me', path: '/contact'}
       ],
       main: {
-        title: 'Proof of Action',
+        title: 'OpenBoard',
         subTitle: 'A fully decentralized alternative social media application',
         text: 'Check out our most popular posts below or submit your own!'
       },
       post: {
         title: 'New Post',
         subTitle: '',
-        text: 'Upload any picture format with a brief description to have it uploaded to IPFS and shared to the world'
+        text: 'Upload any picture format with a brief description to have it uploaded to IPFS and shared to the world, you will also receive 1 $OBT, the social currency of the platform'
       },
       profile: {
         title: 'Your Profile',
