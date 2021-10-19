@@ -32,7 +32,7 @@ class Main extends Component {
                       </li>
                       <li key={key} className="list-group-item py-2">
                         <small className="float-left mt-1 text-muted">
-                          TIPS: {window.web3.utils.fromWei(image.tipAmount.toString(), 'Ether')} ETH
+                          TIPS: {window.web3.utils.fromWei(image.tipAmount.toString(), 'Ether')} $OBT
                         </small>
                         <button
                           className="btn btn-link btn-sm float-right pt-0"
@@ -43,7 +43,7 @@ class Main extends Component {
                             this.props.tipImageOwner(event.target.name, tipAmount)
                           }}
                         >
-                          TIP 0.1 ETH
+                          TIP 0.1 $OBT
                         </button>
                       </li>
                     </ul>
