@@ -1,8 +1,8 @@
 {
-  "name": "decentragram",
+  "name": "openboard",
   "version": "0.1.0",
   "description": "Decentralized Social Media",
-  "author": "Dapp University",
+  "author": "Alex Posey",
   "homepage": "./",
   "dependencies": {
     "@truffle/hdwallet-provider": "^1.1.0",
