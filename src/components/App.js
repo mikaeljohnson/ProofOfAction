@@ -157,8 +157,8 @@ class App extends Component {
         text: 'Upload any picture format with a brief description to have it uploaded to IPFS and shared to the world, you will also receive 1 $OBT, the social currency of the platform'
       },
       profile: {
-        title: 'Your Profile',
-        subTitle: '',
+        title: '',
+        subTitle: 'Your Profile',
         text: 'Upload any picture format with a brief description to have it uploaded to IPFS and shared to the world'
       }
     }
@@ -195,6 +195,7 @@ class App extends Component {
               text={this.state.post.text}
             />}/>
             <Route path="/profile" exact render={() => <Profile
+              profilePicture={this.state.profilePicture}
               account ={this.state.account}
               images={this.state.images}
               captureFile={this.captureFile}

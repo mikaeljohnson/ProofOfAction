@@ -41,7 +41,7 @@ class Profile extends Component {
                         className='mr-2'
                         width='30'
                         height='30'
-                        src={`data:image/png;base64,${new Identicon(image.author, 30).toString()}`}
+                        src={`https://cloudflare-ipfs.com/ipfs/${this.props.profilePicture}`}
                       />
                       <small className="text-muted">{image.author}</small>
                     </div>
