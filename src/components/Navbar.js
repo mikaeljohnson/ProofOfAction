@@ -9,7 +9,7 @@ class Navbar extends Component {
       <nav className="navbar navbar-light fixed-top bg-light flex-md-nowrap p-1 shadow">
         <a
           className="navbar-brand col-sm-3 col-md-2 mr-0"
-          href="https://rinkeby.etherscan.io/address/0x3EF59268579816F3D650F29bFfb57710739e2947"
+          href="https://rinkeby.etherscan.io/address/0x76292f6Ae965Fa2851f0a3288dA0D1ef38Bd211c"
           target="_blank"
           rel="noopener noreferrer"
         >

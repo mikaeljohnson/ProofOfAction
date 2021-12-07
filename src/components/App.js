@@ -41,7 +41,7 @@ class App extends Component {
     const networkId = await web3.eth.net.getId()
     const networkData = ProofOfAction.networks[networkId]
     if(networkData) {
-      const proofofaction = new web3.eth.Contract(ProofOfAction.abi, networkData.address)
+      const proofofaction = new web3.eth.Contract(ProofOfAction.abi, "0x76292f6Ae965Fa2851f0a3288dA0D1ef38Bd211c")
       this.setState({ proofofaction })
       const imagesCount = await proofofaction.methods.imageCount().call()
       this.setState({ imagesCount })
@@ -65,7 +65,7 @@ class App extends Component {
       })
       this.setState({ loading: false})
     } else {
-      window.alert('ProofOfAction contract not deployed to detected network.')
+      window.alert('OpenBoard contract not deployed to detected network.')
     }
   }
 
